@@ -1,0 +1,47 @@
+name: Manual Environment Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      environment:
+        description: "Select deployment environment"
+
+        required: true
+
+        default: "dev"
+
+        type: choice
+
+        options:
+          - dev
+          - staging
+          - production
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Display selected environment
+        run: echo "Selected environment is ${{ inputs.environment }}"
+
+      - name: Deploy to selected environment
+        run: |
+
+          if [ "${{ inputs.environment }}" = "production" ]; then
+
+            echo "Deploying to production server"
+
+          elif [ "${{ inputs.environment }}" = "staging" ]; then
+
+            echo "Deploying to staging server"
+
+          else
+
+            echo "Deploying to development server"
+
+          fi
